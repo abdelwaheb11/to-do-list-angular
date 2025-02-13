@@ -1,1 +1,31 @@
-<p>tasks-details works!</p>
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg border border-gray-200">
+  
+    <!-- Titre -->
+    <div class="flex items-center justify-between border-b pb-4 mb-4">
+      <h2 class="text-2xl font-bold text-gray-800">{{ task.title }}</h2>
+      <span class="px-3 py-1 text-sm font-semibold rounded-lg"
+        [ngClass]="task.completed ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'">
+        {{ task.completed ? 'Completed' : 'Pending' }}
+      </span>
+    </div>
+  
+    <!-- Description -->
+    @if(task.desc) {
+        <p class="text-gray-600 text-lg mb-4"><span class="font-bold">Description:</span> {{task.desc}}</p>
+    }@else{
+        <p class="text-gray-600 text-lg mb-4">No description provided.</p>
+    }
+  
+    <!-- Dates -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="flex items-center gap-2 text-gray-500">
+        <mat-icon class="text-blue-500">event</mat-icon>
+        <span><strong>Created At:</strong> {{ task.createdAt | date: 'dd MMM yyyy, HH:mm' }}</span>
+      </div>
+      
+      <div class="flex items-center gap-2 text-gray-500" *ngIf="task.completed">
+        <mat-icon style="color: green;">check_circle</mat-icon>
+        <span><strong>Completed At:</strong> {{ task.completedAt | date: 'dd MMM yyyy, HH:mm' }}</span>
+      </div>
+    </div>
+</div>

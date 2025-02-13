@@ -1,0 +1,37 @@
+.completed{
+    color: green;
+    transition: all 0.1s;
+}
+
+.completed span{
+    display: none;
+}
+
+
+.task:hover .completed{
+    background: green;
+    color: white;
+}
+
+.task:hover .completed span{
+    display: inline;
+}
+
+.notcompleted{
+    color: #d00000;
+    transition: all 0.1s;
+}
+
+.notcompleted span{
+    display: none;
+}
+
+
+.task:hover .notcompleted{
+    background: #d00000;
+    color: white;
+}
+
+.task:hover .notcompleted span{
+    display: inline;
+}

@@ -7,23 +7,14 @@
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">To Do List</span>
       </a>
       <div class=" md:block md:w-auto" >
-        <ul >
-          <li>
-                <button mat-raised-button color="primary" routerLink="/add">
-                    <mat-icon>add</mat-icon> 
-                    <span class="font-bold">Add TASK</span>
-                </button>          
-            </li>
+        <ul class="flex text-white gap-5 text-xl font-bold">
+          <li class="hover:text-blue-200">
+            <a routerLink="/tasks">Tasks</a>           
+          </li>
+          <li class="hover:text-blue-200">
+            <a routerLink="/users">Users</a>
+          </li>
         </ul>
-        @if(_loadingService.isLoading()){
-          <p>
-            getting data from the server
-          </p>
-        } @else{
-          <p>
-            no getting data from the server
-          </p>
-        }
       </div>
     </div>
   </nav>

@@ -1,1 +1,32 @@
-<p>tasks-add works!</p>
+<mat-card class="p-6 shadow-lg rounded-2xl bg-gray-700 w-3xl mx-auto mt-20">
+    <h1 class="text-4xl text-blue-600 text-center font-bold mb-6">Add Task</h1>
+    <form [formGroup]="elementForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="w-full">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" placeholder="Task Title" required>
+        @if(elementForm.get('title')?.invalid){
+            <mat-error>The title is required.</mat-error>
+        }
+      </mat-form-field>
+  
+      <mat-form-field class="w-full mt-3">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="desc" placeholder="Optional Description"></textarea>
+      </mat-form-field>
+  
+      <mat-checkbox formControlName="completed" class="mt-3">Completed</mat-checkbox>
+  
+      <div class="mt-5 flex items-center space-x-3 justify-end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || elementForm.invalid">
+          <mat-icon>add</mat-icon>
+          @if(!isLoading){
+            <span class="font-bold">Add Task</span>
+          }@else {
+            <mat-progress-spinner  diameter="20" mode="indeterminate"></mat-progress-spinner>
+          }
+          
+        </button>
+      </div>
+    </form>
+  </mat-card>
+  

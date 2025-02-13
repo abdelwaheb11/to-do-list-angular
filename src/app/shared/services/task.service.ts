@@ -1,25 +1,24 @@
 import { inject, Injectable } from '@angular/core';
-import Task from '../models/task.model';
+import Task, { TaskPagination } from '../models/task.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environement } from '../../../environements/environement';
+import { environnement } from '../../../environnements/environnment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private baseURL : string  = `${environement.apiUrl}/to-do`
+  private baseURL : string  = `${environnement.apiUrl}/tasks`
   http=inject(HttpClient)
-  // ***** signales ***** 
-  /* LCRUD */
-  getList(limit : string , page : string , search : string):Observable<Task[]>{
+ 
+  getList(limit : string , page : string , search : string):Observable<TaskPagination>{
     let params = new HttpParams();
     params = params.append('limit', limit);
     params = params.append('page', page);
     if(search){
       params = params.append('search', search)
     };
-    return this.http.get<Task[]>(this.baseURL,{params})
+    return this.http.get<TaskPagination>(this.baseURL,{params})
   }
 
   addNewOne(task: Task):Observable<null>{
@@ -37,10 +36,7 @@ export class TaskService {
   deleteOne(id:string):Observable<any>{
     return this.http.delete<any>(`${this.baseURL}/${id}`)
   }
-
- 
   
-
   complited(id:string):Observable<any>{
     return this.http.put<any>(`${this.baseURL}/${id}/complited`,{})
   }
