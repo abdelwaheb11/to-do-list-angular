@@ -1,0 +1,36 @@
+<div
+  class="w-full max-w-4xl mx-auto flex items-center gap-3 px-4 py-2 bg-white rounded-lg shadow-md"
+>
+  <!-- Formulaire de recherche -->
+  <form class="flex items-center flex-grow gap-2" (ngSubmit)="searchEvent()">
+    <mat-icon class="text-gray-500">search</mat-icon>
+
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      placeholder="Search tasks..."
+      name="search"
+      class="flex-grow min-w-0 outline-none bg-transparent text-gray-800 px-2 py-1"
+    />
+
+    <button mat-fab extended type="submit">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+
+    <button
+      mat-raised-button
+      [disabled]="!isSearch"
+      class="p-0"
+      type="button"
+      (click)="resetSearchEvent()"
+      #tooltip="matTooltip"
+      matTooltip="Refresh data"
+      matTooltipPosition="below"
+      matTooltipHideDelay="100000"
+      aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+    >
+      <mat-icon>autorenew</mat-icon>
+    </button>
+  </form>
+</div>

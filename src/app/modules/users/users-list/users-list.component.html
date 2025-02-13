@@ -1,23 +1,18 @@
 <div class="md:w-2/3 w-3/4 mx-auto mt-10">
-  <form class="flex items-center bg-white p-3 rounded-lg shadow-md w-[60%] mx-auto" (ngSubmit)="searchUsers()">
-    <mat-icon class="text-gray-500">search</mat-icon>
-    
-    <input 
-      type="text" 
-      [(ngModel)]="searchText" 
-      placeholder="Search Users..." 
-      name="search" 
-      class="w-full p-2 outline-none bg-transparent text-gray-800" 
-    />
-    
-    <button mat-fab extended type="submit">
-      <span class="mr-2">Search</span>
-      <mat-icon>search</mat-icon>
-    </button>
-  </form>
+  <app-search 
+  [searchText]="searchText" 
+  (search)="searchUsers($event)" 
+  (resetSearch)="resetSearch()">
+</app-search>
   
   
-  <div class="mat-elevation-z8 mt-5">
+  <div class="mat-elevation-z8 mt-5 max-h-[73vh] overflow-auto max-w-4xl mx-auto p-4 shadow-2xl rounded-xl bg-gradient-to-b from-blue-50 to-blue-100" >
+    <div class=" mb-3 flex justify-end">
+      <button mat-fab extended routerLink="add">
+        <mat-icon>add</mat-icon>
+        Add User
+      </button>
+    </div>
     <table mat-table [dataSource]="dataSource" matSort>
   
       <ng-container matColumnDef="first_name">

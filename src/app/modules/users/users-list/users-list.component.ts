@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { SearchComponent } from '../../../shared/components/search/search.component';
 
 @Component({
   selector: 'app-users-list',
@@ -27,7 +28,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatMenuModule,
     RouterLink,
-    MatButtonModule
+    MatButtonModule,
+    SearchComponent
   ],
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.css']
@@ -78,11 +80,15 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  searchUsers(): void {
-    if (this.searchText.trim()) {
-      this.currentPage = 1;
-      this.fetchUsers();
+  searchUsers(searchValue: string | null | undefined) {
+    if (searchValue && searchValue.trim()) { // Vérifie que la valeur n'est ni `null` ni `undefined`
+      this.searchText = searchValue.trim();
+    } else {
+      this.searchText = ''; // Évite les erreurs en cas de valeur vide
     }
+    
+    this.currentPage = 1;
+    this.fetchUsers();
   }
 
   deleteUser(id: string): void {
@@ -115,5 +121,11 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     this.currentPage = event.pageIndex + 1;
     this.currentSize = event.pageSize;
     this.fetchUsers();
+  }
+
+  resetSearch(){
+    this.searchText=""
+    this.currentPage = 1;
+    this.fetchUsers()
   }
 }

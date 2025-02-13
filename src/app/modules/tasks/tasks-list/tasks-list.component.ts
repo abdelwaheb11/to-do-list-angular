@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from '../../../shared/components/dialog-confirm/dialog-confirm.component';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SearchComponent } from '../../../shared/components/search/search.component';
 @Component({
   selector: 'app-tasks-list',
   imports: [
@@ -24,7 +26,9 @@ import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
     RouterLink,
     FormsModule,
     UpperCasePipe,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTooltipModule,
+    SearchComponent
   ],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css'
@@ -49,6 +53,7 @@ export class TasksListComponent implements OnInit  {
     this._loadibgService.show()
       this._taskService.getList(this.currentSize.toString(),this.currentPage.toString(),this.searchText).subscribe({
         next: (res) => {
+          console.log(res)  // {tasks: Array<Task>, totalPages: number, totalTasks: number}
           this.listTask = res.tasks;
           this.totalPages = res.totalPages;
           this.totalSizeTasks = res.totalTasks;
@@ -61,13 +66,21 @@ export class TasksListComponent implements OnInit  {
       })
   }
 
-  searchTasks(){
-    if(this.searchText.trim()){
-      this.currentPage = 1;
-      this.fetchTasks()
+ 
+    
+
+
+  searchTasks(searchValue: string | null | undefined) {
+    if (searchValue && searchValue.trim()) { // Vérifie que la valeur n'est ni `null` ni `undefined`
+      this.searchText = searchValue.trim();
+    } else {
+      this.searchText = ''; // Évite les erreurs en cas de valeur vide
     }
     
+    this.currentPage = 1;
+    this.fetchTasks();
   }
+  
 
   deleteTask(id :string , title :string)  {
     this.openDialog("Delete Task",`Are you sure you want to delete task : ${title} ?`).afterClosed().subscribe(
@@ -119,6 +132,12 @@ export class TasksListComponent implements OnInit  {
     this.currentPage = event.pageIndex + 1;  
     this.currentSize = event.pageSize; 
     this.fetchTasks();
+  }
+
+  resetSearch(){
+    this.searchText=""
+    this.currentPage = 1;
+    this.fetchTasks()
   }
   
 

@@ -38,6 +38,6 @@ export class TaskService {
   }
   
   complited(id:string):Observable<any>{
-    return this.http.put<any>(`${this.baseURL}/${id}/complited`,{})
+    return this.http.patch<any>(`${this.baseURL}/${id}/complited`,{})
   }
 }
